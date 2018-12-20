@@ -30,6 +30,13 @@ interface ITransition {
   duration: number;
 }
 
+interface ITransitionConnection {
+  id: string;
+  fromSceneId: string;
+  toSceneId: string;
+  transitionId: string;
+}
+
 interface StingerTransitionOptions {
   /** Transition type **/
   type: 'stinger';
@@ -182,7 +189,9 @@ export class SceneTransitionsModule extends Module {
    * @param transitionId ID of the transition to connect
    * @param fromSceneId Originating scene ID
    * @param toSceneId Target scene ID
-   * @return `true` if the connection was successfully created
+   * @return An object describing the connection properties
+   *
+   * @see {ITransitionConnection}
    * @see {ScenesModule.getScenes} for information on how to retrieve scene IDs
    *
    */
@@ -192,8 +201,8 @@ export class SceneTransitionsModule extends Module {
     transitionId: string,
     fromSceneId: string,
     toSceneId: string,
-  ) {
-    return !!this.transitionsService.addConnection(fromSceneId, toSceneId, transitionId);
+  ): Promise<ITransitionConnection> {
+    return this.transitionsService.addConnection(fromSceneId, toSceneId, transitionId);
   }
 
   private createTransitionOptions(
