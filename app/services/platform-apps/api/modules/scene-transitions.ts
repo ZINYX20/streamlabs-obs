@@ -205,6 +205,18 @@ export class SceneTransitionsModule extends Module {
     return this.transitionsService.addConnection(fromSceneId, toSceneId, transitionId);
   }
 
+  /**
+   * Delete a scene transition connection
+   *
+   * @param _ctx API Context
+   * @param connectionId ID of the connection to be deleted
+   * @return `true` if the connection was successfully deleted
+   */
+  async deleteConnection(_ctx: IApiContext, connectionId: string): Promise<boolean> {
+    this.transitionsService.deleteConnection(connectionId);
+    return true;
+  }
+
   private createTransitionOptions(
     appId: string,
     shouldLock: boolean,
